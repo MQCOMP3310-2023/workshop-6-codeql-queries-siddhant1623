@@ -5,8 +5,11 @@
  * @id java/example/empty-block
  */
 
-import java
+ import java
 
-from BlockStmt b
-where b.getNumStmt() = 0
-select b, "This is an empty block."
+from LoopStmt loop, MethodAccess call, Method method
+where
+     loop.getAChild*() = call.getEnclosingStmt() and
+     call.getMethod() = method and
+     method.hasName("nextLine") 
+     select call,loop, "This calls nextLine of a scanner in a loop"
